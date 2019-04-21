@@ -7,17 +7,17 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def webhook():
-    print("webhook"); sys.stdout.flush()
     if request.method == 'POST':
-        data = json.loads(request.json)
-        try:
-            for x in data:
-                if x == "Branch":
-                    print("%s: %s" % (x, data[x]))
-        except KeyError as erro:
-        print(erro)
+        if request.is_json:
+            content = request.get_json()
+            try:
+                for x in content:
+                    if x == "Branch":
+                        print("%s: %s" % (x, content[x]))
+            except KeyError as erro:
+                print(erro)
 
-        return 'OK', 200
+            return 'OK', 200
     else:
         abort(400)
 
