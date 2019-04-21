@@ -20,8 +20,8 @@ def webhook():
             except KeyError as erro:
                 print(erro)
             return 'OK', 200
-    else:
-        abort(400)
+        else:
+            abort(400)
 
 
 if __name__ == '__main__':
