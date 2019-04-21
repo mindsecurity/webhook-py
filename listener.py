@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
-import sys, json, requests, os
+# Made by MindSecurity
+import sys, json, requests, os, argparse
 from flask import Flask, request, abort
 
 
 app = Flask(__name__)
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-p", "--path", help="Git Repository Full Path")
+parser.add_argument("-c", "--command", help="Command to Execute")
+args = parser.parse_args()
 
 @app.route('/', methods=['POST'])
 def webhook():
@@ -19,8 +25,9 @@ def webhook():
                         print("Updating...")
                         print(json.dumps(content[x], indent=4, sort_keys=True))
                         # DO WHATEVER
-                        os.chdir("/home/user/workspace/")
-                        os.system("git pull origin master")
+                        print("Path: {} \nCommand: {}".format(args.path, args.command))
+                        os.chdir(args.path)
+                        os.system(args.command)
                         print("Up to Date! \n")
             except KeyError as erro:
                 print(erro)
