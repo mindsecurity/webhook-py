@@ -12,11 +12,10 @@ def webhook():
             content = request.get_json()
             try:
                 for x in content:
-                    if x == "Branch":
-                        print("%s: %s" % (x, content[x]))
-                        r = requests.get(url = "http://localhost/chain", params = "{ 'address': 'http://localhost' }")
-                        data = r.json()
-                        print(json.dumps(data, indent=4, sort_keys=True))
+                    if x == "commits":
+                        #data = print("%s: %s" % (x, content[x]))
+                        print(json.dumps(content[x], indent=4, sort_keys=True))
+                        # DO WHATEVER
             except KeyError as erro:
                 print(erro)
             return 'OK', 200
@@ -25,4 +24,4 @@ def webhook():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=int("8080"), debug=True)
+    app.run(host="0.0.0.0", port=int("8081"), debug=True)
